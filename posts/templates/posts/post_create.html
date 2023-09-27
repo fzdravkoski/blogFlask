@@ -1,4 +1,4 @@
-{% extends 'base.html %}
+{% extends 'base.html' %}
 
 {% block title %}
     Create a new post!
@@ -11,9 +11,10 @@
     {% for field in form %}
         <div class="form-group">
             {{ field.label() }}
-            {{ field }}
+            {{ field(class="form-control") }}
         </div>
     {% endfor %}
+    <button class="btn btn-primary">Submit</button>
 
 </form>
 
