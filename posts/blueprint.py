@@ -1,12 +1,25 @@
 from flask import Blueprint
 from flask import render_template
+from flask import request
 from models import *
-
+from .forms import PostForm
 posts = Blueprint('posts', __name__, template_folder='templates')
+
+@posts.route('/create')
+def post_create():
+    form = PostForm()
+    return render_template('posts/post_create.html', form = form)
+
+
 
 @posts.route('/')
 def post_lists():
-    posts = Post.query.all()
+    q =  request.args.get('q')
+    if q:
+        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q))
+    else:
+        posts = Post.query.all()
+
     return render_template('posts/posts.html', posts=posts)
 
 
