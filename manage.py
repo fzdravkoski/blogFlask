@@ -1,4 +1,4 @@
-from app import Manager
+from app import manager
 from main import *
 
 if __name__ ==  '__main__':

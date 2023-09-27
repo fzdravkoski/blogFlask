@@ -1,0 +1,18 @@
+<div class="card mb-4 mt-4" style="width: 18rem;">
+                <div class="card-body">
+                        <h5 class="card-title"><a href=" {{ url_for('posts.post_details', slug=post.slug) }}"> {{ post.title }} </a> </h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary"> {{ post.created.date() }}</h6>
+                         <p class="card-text">{{ post.body }}</p>
+                         <a href="{{ url_for('posts.post_details', slug=post.slug) }}" class="btn btn-primary"> more..</a>
+          </div>
+            {% if post.tags.count() %}
+              <div class="card-footer text-body-secondary">
+            {% for tag in post.tags %}
+
+                      <a href="{{ url_for('posts.tag_detail', slug = tag.slug) }}">
+                          <span class="badge text-bg-secondary">{{ tag.title }}</span>
+                      </a>
+                  {% endfor %}
+          </div>
+            {% endif %}
+        </div>
