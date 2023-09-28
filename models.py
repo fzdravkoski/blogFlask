@@ -26,7 +26,7 @@ class Post(db.Model):
     slug = db.Column(db.String(200), unique=True)
     body = db.Column(db.Text)
     created = db.Column(db.DateTime, default = datetime.now())
-    tags = db.relationship('Tag', secondary=posts_tags, backref =db.backref('posts'), lazy='dynamic')
+    tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts'), lazy='dynamic')
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.generate_slug()
@@ -45,11 +45,20 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
     slug = db.Column(db.String(140), unique=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.slug = slugify(self.title)
+        self.slug = self.generate_slug()
+
+    def generate_slug(self):
+        if self.title:
+            self.slug = slugify(self.title)
+        else:
+            self.slug = str(int(time()))
     def __repr__(self):
         return f'<Tag id: {self.id}, title: {self.title}>'
+
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
