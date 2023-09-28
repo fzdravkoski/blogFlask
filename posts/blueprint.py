@@ -64,6 +64,7 @@ def tag_detail(slug):
 
 
 @posts.route('/<slug>/edit', methods=['POST', 'GET'])
+@login_required
 def post_update(slug):
     post = Post.query.filter(Post.slug==slug).first()
     if request.method == 'POST':
